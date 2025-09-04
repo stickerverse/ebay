@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:6.0
+    container_name: ebay_mongodb_dev
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_dev_data:/data/db
+    networks:
+      - ebay_dev_network
+
+  redis:
+    image: redis:7-alpine
+    container_name: ebay_redis_dev
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_dev_data:/data
+    networks:
+      - ebay_dev_network
+
+volumes:
+  mongodb_dev_data:
+  redis_dev_data:
+
+networks:
+  ebay_dev_network:
+    driver: bridge
